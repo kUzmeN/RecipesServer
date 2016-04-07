@@ -43,16 +43,6 @@ public class DatabaseConfig {
         return em;
 
 
-//
-//        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-//        entityManagerFactoryBean.setDataSource(dataSource());
-//        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
-//        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
-//
-//        entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-//
-//        return entityManagerFactoryBean;
-
     }
 
 
