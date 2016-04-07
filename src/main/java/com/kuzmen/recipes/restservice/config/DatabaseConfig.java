@@ -1,6 +1,7 @@
 package com.kuzmen.recipes.restservice.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,17 @@ public class DatabaseConfig {
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(getHibernateProperties());
         return em;
+
+
+//
+//        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+//        entityManagerFactoryBean.setDataSource(dataSource());
+//        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
+//        entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("db.entity.package"));
+//
+//        entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
+//
+//        return entityManagerFactoryBean;
 
     }
 

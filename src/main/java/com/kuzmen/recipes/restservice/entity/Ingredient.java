@@ -3,29 +3,23 @@ package com.kuzmen.recipes.restservice.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "ingredient")
+public class Ingredient {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
-    @Column(name = "id")
     private int id;
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
-    private Set<Recipe> recipes;
-
-
-    public Category() {
-
-    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.ingredient")
+    private Set<RecipeIngredient> recipeIngredients = new HashSet<RecipeIngredient>(0);
 
     public int getId() {
         return id;
@@ -43,13 +37,12 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Recipe> getRecipes() {
-        return recipes;
+
+    public Set<RecipeIngredient> getRecipeIngredients() {
+        return recipeIngredients;
     }
 
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
+    public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
     }
-
-
 }

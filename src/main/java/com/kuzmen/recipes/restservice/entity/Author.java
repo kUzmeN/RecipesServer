@@ -5,26 +5,27 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
-@Table(name = "category")
-public class Category {
 
+@Entity
+@Table(name = "author")
+public class Author {
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "link")
+    private String link;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "author")
     private Set<Recipe> recipes;
 
-
-    public Category() {
-
+    public Author() {
     }
 
     public int getId() {
@@ -43,6 +44,14 @@ public class Category {
         this.name = name;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public Set<Recipe> getRecipes() {
         return recipes;
     }
@@ -50,6 +59,4 @@ public class Category {
     public void setRecipes(Set<Recipe> recipes) {
         this.recipes = recipes;
     }
-
-
 }
