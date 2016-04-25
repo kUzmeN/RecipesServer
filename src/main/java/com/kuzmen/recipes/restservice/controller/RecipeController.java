@@ -1,19 +1,35 @@
 package com.kuzmen.recipes.restservice.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import com.kuzmen.recipes.restservice.entity.Recipe;
+import com.kuzmen.recipes.restservice.service.RecipeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/recipe")
+import java.util.List;
+
+@RestController
 public class RecipeController {
+    @Autowired
+    RecipeService recipeService;
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/recipes", method = RequestMethod.GET)
     @ResponseBody
-    public String getHello(ModelMap model) {
-        return "Hello Wrold";
+    public List<Recipe> getHello() {
+        List recipes = recipeService.readAll();
+
+        return recipes;
+
     }
+
+//    @RequestMapping(value = "/recipes/{id}", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Recipe getHello(@PathVariable("id") int recipeId) {
+//        return recipeService.readAll(recipeId);
+//    }
+
 
 }

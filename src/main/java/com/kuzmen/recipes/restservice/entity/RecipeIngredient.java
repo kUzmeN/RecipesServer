@@ -51,7 +51,6 @@ public class RecipeIngredient {
     }
 
 
-
     public String getMeasure() {
         return measure;
     }

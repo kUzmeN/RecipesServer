@@ -1,21 +1,27 @@
 package com.kuzmen.recipes.restservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "recipe")
-public class Recipe {
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Recipe implements Serializable {
 
 
     @Id
-    @GeneratedValue(generator = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment", strategy = "increment")
     @Column(name = "id", unique = true, nullable = false)
+
     private int id;
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -25,23 +31,31 @@ public class Recipe {
     private int time;
     @Column(name = "likes", nullable = false)
     private int likes;
+    @Column(name = "link", nullable = true)
+    private String link;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @Column(name = "updated", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updated;
+
+
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+
     private Category category;
 
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "recipe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
     private Set<Step> steps;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe")
     private Set<RecipeIngredient> recipeIngredients = new HashSet<RecipeIngredient>(0);
 
 
@@ -89,6 +103,22 @@ public class Recipe {
         this.likes = likes;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Date getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(Date updated) {
+        this.updated = updated;
+    }
+
 
     public Set<Step> getSteps() {
 
@@ -98,7 +128,6 @@ public class Recipe {
     public void setSteps(Set<Step> steps) {
         this.steps = steps;
     }
-
 
     public Author getAuthor() {
         return author;
