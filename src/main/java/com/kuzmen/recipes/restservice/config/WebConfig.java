@@ -17,6 +17,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.kuzmen.recipes.restservice")
+
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     //    JSON Mapper

@@ -10,6 +10,9 @@ import java.util.Set;
 @Entity
 @Table(name = "ingredient")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@lombok.Getter
+@lombok.Setter
+@lombok.NoArgsConstructor
 public class Ingredient {
 
     @Id
@@ -22,28 +25,4 @@ public class Ingredient {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.ingredient")
     private Set<RecipeIngredient> recipeIngredients = new HashSet<RecipeIngredient>(0);
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public Set<RecipeIngredient> getRecipeIngredients() {
-        return recipeIngredients;
-    }
-
-    public void setRecipeIngredients(Set<RecipeIngredient> recipeIngredients) {
-        this.recipeIngredients = recipeIngredients;
-    }
 }

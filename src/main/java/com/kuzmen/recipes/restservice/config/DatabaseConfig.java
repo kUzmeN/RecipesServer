@@ -28,7 +28,6 @@ public class DatabaseConfig {
 
 
     @Resource
-    //Получает с помощью property-файлов какие то значения
     private Environment env;
 
     @Bean

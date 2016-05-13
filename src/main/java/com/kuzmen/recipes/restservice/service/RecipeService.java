@@ -6,6 +6,6 @@ import java.util.List;
 
 
 public interface RecipeService {
-    List<Recipe> readAll();
+    List<Recipe> getAll();
 
 }

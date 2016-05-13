@@ -5,6 +5,8 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
+
+@lombok.Setter
 @Embeddable
 public class RecipeIngredientId implements Serializable {
 
@@ -17,18 +19,12 @@ public class RecipeIngredientId implements Serializable {
         return recipe;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
 
     @ManyToOne
     public Ingredient getIngredient() {
         return ingredient;
     }
 
-    public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
-    }
 
     @Override
     public boolean equals(Object o) {
