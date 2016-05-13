@@ -1,6 +1,7 @@
 package com.kuzmen.recipes.restservice.service.impl;
 
 
+import com.kuzmen.recipes.restservice.entity.Comment;
 import com.kuzmen.recipes.restservice.entity.User;
 import com.kuzmen.recipes.restservice.repository.UserRepository;
 import com.kuzmen.recipes.restservice.service.UserManagementService;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -30,11 +32,11 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     @Transactional(readOnly = true)
-    public User findByEmail(String email) {
+    public User getByEmail(String email) {
         logger.debug("Finding user by email: {}", email);
 
         try {
-            User foundUser = entityManager.createQuery("SELECT u FROM User  u where u.email LIKE :email", User.class)
+            User foundUser = entityManager.createQuery("SELECT u FROM User u where u.email LIKE :email", User.class)
                     .setParameter("email", email)
                     .getSingleResult();
             return foundUser;
@@ -43,4 +45,12 @@ public class UserManagementServiceImpl implements UserManagementService {
             return null;
         }
     }
+
+    @Override
+    public Set<Comment> getCommentsByUser(int id) {
+        User user = userRepository.findOne(id);
+        return user.getComments();
+
+    }
+
 }

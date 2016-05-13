@@ -1,7 +1,9 @@
 package com.kuzmen.recipes.restservice.entity;
 
 
-public enum UserRole {
+import java.io.Serializable;
+
+public enum UserRole implements Serializable {
 
     ADMIN,
     SUPER_USER,

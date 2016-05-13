@@ -1,6 +1,8 @@
 package com.kuzmen.recipes.restservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,6 +16,8 @@ import java.util.Set;
 @Entity
 @Table(name = "recipe")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler","sentMessages", "receivedMessages", "educationFacility"})
+@JsonAutoDetect
 @lombok.Getter
 @lombok.Setter
 @lombok.NoArgsConstructor
@@ -53,12 +57,15 @@ public class Recipe implements Serializable {
     @JoinColumn(name = "author_id", nullable = false)
     private Author author;
 
+    @OneToMany (fetch = FetchType.LAZY,mappedBy="recipe" ,cascade={CascadeType.DETACH})
+    private Set<Comment> comments;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipe" ,cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<Step> steps;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.recipe",cascade={CascadeType.PERSIST, CascadeType.REMOVE})
     private Set<RecipeIngredient> recipeIngredients = new HashSet<RecipeIngredient>(0);
 
 }

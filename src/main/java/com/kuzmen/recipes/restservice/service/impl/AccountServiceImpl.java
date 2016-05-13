@@ -75,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
     public ResponseMessage changePassword(String email, String oldPassword, String newPassword) {
         ResponseMessage changePasswordMessage = new ResponseMessage();
 
-        User user = userManagementService.findByEmail(email);
+        User user = userManagementService.getByEmail(email);
         if (user != null) {
             String token = checkPassword(email, oldPassword);
             if (token != null) {
@@ -113,7 +113,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private String checkPassword(String email, String password) {
-        User user = userManagementService.findByEmail(email);
+        User user = userManagementService.getByEmail(email);
         if (encryption.verifyHash(password, user.getToken())) {
             return user.getToken();
         } else {
@@ -123,7 +123,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     private boolean checkUserExist(String email) {
-        User user = userManagementService.findByEmail(email);
+        User user = userManagementService.getByEmail(email);
         if (user != null) {
             return true;
         } else

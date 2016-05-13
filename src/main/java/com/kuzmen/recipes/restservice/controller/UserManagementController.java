@@ -1,26 +1,30 @@
 package com.kuzmen.recipes.restservice.controller;
 
+import com.kuzmen.recipes.restservice.entity.Comment;
 import com.kuzmen.recipes.restservice.entity.Recipe;
+import com.kuzmen.recipes.restservice.entity.User;
 import com.kuzmen.recipes.restservice.service.UserManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
+@RequestMapping(value = "/user")
 @RestController
 public class UserManagementController {
     @Autowired
     UserManagementService userManagementService;
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     @ResponseBody
-    public List<Recipe> getHello() {
-        List users = userManagementService.getAll();
+    public List<User> getHello() {
+        return userManagementService.getAll();
+    }
 
-        return users;
-
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Set<Comment> getComments(@PathVariable("id") int id){
+        return userManagementService.getCommentsByUser(id);
     }
 }
